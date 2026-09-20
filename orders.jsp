@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Manage Orders - Sivaganesh Martt</title>
+    <title>My Orders - Sivaganesh Martt</title>
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/css/style.css">
@@ -16,30 +16,24 @@
 
 <header class="header">
 
-    <a href="${pageContext.request.contextPath}/admin/home.jsp"
+    <a href="${pageContext.request.contextPath}/user/home.jsp"
        class="logo">
-        Sivaganesh Martt - Admin
+        Sivaganesh Martt
     </a>
 
     <nav class="nav-links">
-        <a href="${pageContext.request.contextPath}/admin/products">
-            Products
-        </a>
-
-        <a href="${pageContext.request.contextPath}/admin/orders">
-            Orders
-        </a>
-
-        <a href="${pageContext.request.contextPath}/logout">
-            Logout
-        </a>
+        <a href="${pageContext.request.contextPath}/products">Products</a>
+        <a href="${pageContext.request.contextPath}/wishlist">Wishlist</a>
+        <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        <a href="${pageContext.request.contextPath}/orders">My Orders</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </nav>
 
 </header>
 
 <main class="container">
 
-    <h1 class="page-title">Manage Orders 📦</h1>
+    <h1 class="page-title">My Orders 📦</h1>
 
     <%
         List<Order> orders =
@@ -49,8 +43,15 @@
     %>
 
         <div class="dashboard-card">
-            <h3>No Orders Found</h3>
-            <p>Customer orders will appear here.</p>
+            <h3>No Orders Yet</h3>
+            <p>You haven't placed any orders yet.</p>
+
+            <br>
+
+            <a href="${pageContext.request.contextPath}/products"
+               class="btn primary-btn">
+                Start Shopping
+            </a>
         </div>
 
     <%
@@ -70,11 +71,6 @@
                     </h3>
 
                     <p>
-                        <strong>User ID:</strong>
-                        <%= order.getUserId() %>
-                    </p>
-
-                    <p>
                         <strong>Total:</strong>
                         ₹<%= String.format("%.2f",
                                 order.getTotalAmount()) %>
@@ -86,6 +82,11 @@
                     </p>
 
                     <p>
+                        <strong>Status:</strong>
+                        <%= order.getStatus() %>
+                    </p>
+
+                    <p>
                         <strong>Address:</strong>
                         <%= order.getAddress() %>
                     </p>
@@ -94,62 +95,6 @@
                         <strong>Date:</strong>
                         <%= order.getCreatedAt() %>
                     </p>
-
-                    <br>
-
-                    <form action="${pageContext.request.contextPath}/admin/orders"
-                          method="post">
-
-                        <input type="hidden"
-                               name="orderId"
-                               value="<%= order.getId() %>">
-
-                        <div class="form-group">
-
-                            <label>Order Status</label>
-
-                            <select name="status" required>
-
-                                <option value="PLACED"
-                                    <%= "PLACED".equals(order.getStatus())
-                                        ? "selected" : "" %>>
-                                    Placed
-                                </option>
-
-                                <option value="PROCESSING"
-                                    <%= "PROCESSING".equals(order.getStatus())
-                                        ? "selected" : "" %>>
-                                    Processing
-                                </option>
-
-                                <option value="SHIPPED"
-                                    <%= "SHIPPED".equals(order.getStatus())
-                                        ? "selected" : "" %>>
-                                    Shipped
-                                </option>
-
-                                <option value="DELIVERED"
-                                    <%= "DELIVERED".equals(order.getStatus())
-                                        ? "selected" : "" %>>
-                                    Delivered
-                                </option>
-
-                                <option value="CANCELLED"
-                                    <%= "CANCELLED".equals(order.getStatus())
-                                        ? "selected" : "" %>>
-                                    Cancelled
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                        <button type="submit"
-                                class="btn primary-btn">
-                            Update Status
-                        </button>
-
-                    </form>
 
                 </div>
 
